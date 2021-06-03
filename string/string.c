@@ -94,3 +94,19 @@ void str_insert(string* s, char* cstr, unsigned int i) {
 
     s->len = newlen;
 }
+
+void str_string_insert(string* s1, string* s2, unsigned int i) {
+    size_t newlen = s1->len + s2->len;
+
+    if (newlen > (s1->capacity >> 1)) {
+        s1->capacity = nextPowerOfTwo(newlen << 1);
+        s1->str = (char*)realloc(s1->str, s1->capacity*sizeof(char));
+    }
+
+    for (size_t k=newlen-1; k>=i+s2->len-1; k--)
+        s1->str[k] = s1->str[k-s2->len];
+    for (size_t k=i; k<i+s2->len; k++)
+        s1->str[k] = s2->str[k-i];
+
+    s1->len = newlen;
+}

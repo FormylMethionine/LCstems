@@ -35,18 +35,27 @@ int main(void) {
     printf("insert char*\n");
     str_insert(test, "ll", 2);
     ctest = cstr(test);
-    printf("string:%s\n\n", ctest);
+    printf("string:%s\n", ctest);
+    printf("capacity:%lu\n\n", test->capacity);
+    free(ctest);
+
+    printf("insert char* 2\n");
+    str_insert(test, "llllllllllllllllllllllllllllllllllllllllllll", 2);
+    ctest = cstr(test);
+    printf("string:%s\n", ctest);
+    printf("capacity:%lu\n\n", test->capacity);
     free(ctest);
     str_free(test);
 
-    printf("long hello\n");
-    test = str_create("Helllloooooooo");
-    printf("len:%lu\n", test->len);
-    printf("capacity:%lu\n", test->capacity);
-    ctest = cstr(test);
-    printf("string:%s\n", ctest);
-    free(ctest);
-    str_free(test);
+    printf("insert string\n");
+    string* s1 = str_create("Heo Word!");
+    string* s2 = str_create("lllllllllllllllllllllllll");
+    str_string_insert(s1, s2, 2);
+    char* cs1 = cstr(s1);
+    printf("string:%s\n\n");
+    free(cs1);
+    str_free(s1);
+    str_free(s2);
 
     return 0;
 }
