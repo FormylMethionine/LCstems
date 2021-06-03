@@ -8,25 +8,33 @@ int main(void) {
     string* test = str_create("Hello");
     printf("len:%lu\n", test->len);
     printf("capacity:%lu\n", test->capacity);
-    printf("string:%s\n\n", cstr(test));
+    char* ctest = cstr(test);
+    printf("string:%s\n\n", ctest);
+    free(ctest);
 
     printf("append char\n");
     str_char_append(test, '.');
-    printf("string:%s\n\n", cstr(test));
+    ctest = cstr(test);
+    printf("string:%s\n\n", ctest);
+    free(ctest);
 
     printf("append string\n");
     str_append(test, "World!");
-    printf("string:%s\n", cstr(test));
+    ctest = cstr(test);
+    printf("string:%s\n", ctest);
+    free(ctest);
     printf("len:%lu\n", test->len);
     printf("capacity:%lu\n\n", test->capacity);
-    free(test);
+    str_free(test);
 
     printf("long hello\n");
     test = str_create("Helllloooooooo");
     printf("len:%lu\n", test->len);
     printf("capacity:%lu\n", test->capacity);
-    printf("string:%s\n", cstr(test));
-    free(test);
+    ctest = cstr(test);
+    printf("string:%s\n", cstr);
+    free(ctest);
+    str_free(test);
 
     return 0;
 }
