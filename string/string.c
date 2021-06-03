@@ -77,3 +77,20 @@ void str_char_insert(string*s, char c, unsigned int i) {
         s->str[k] = s->str[k-1];
     s->str[i] = c;
 }
+
+void str_insert(string* s, char* cstr, unsigned int i) {
+    size_t cstr_len = strlen(cstr);
+    size_t newlen = s->len + cstr_len;
+
+    if (newlen > (s->capacity >> 1)) {
+        s->capacity = nextPowerOfTwo(newlen << 1);
+        s->str = (char*)realloc(s->str, s->capacity*sizeof(char));
+    }
+
+    for (size_t k=newlen-1; k>=i+cstr_len-1; k--)
+        s->str[k] = s->str[k-cstr_len];
+    for (size_t k=i; k<i+cstr_len; k++)
+        s->str[k] = cstr[k-i];
+
+    s->len = newlen;
+}

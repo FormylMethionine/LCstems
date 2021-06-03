@@ -29,7 +29,13 @@ int main(void) {
     printf("insert char\n");
     str_char_insert(test, 'e', 1);
     ctest = cstr(test);
-    printf("string:%s\n", ctest);
+    printf("string:%s\n\n", ctest);
+    free(ctest);
+
+    printf("insert char*\n");
+    str_insert(test, "ll", 2);
+    ctest = cstr(test);
+    printf("string:%s\n\n", ctest);
     free(ctest);
     str_free(test);
 
