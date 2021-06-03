@@ -66,3 +66,14 @@ void str_str_append(string* s, string* s_app) {
         s->str[(s->len)+i] = s_app->str[i];
     s->len = newlen;
 }
+
+void str_char_insert(string*s, char c, unsigned int i) {
+    s->len += 1;
+
+    if (s->len > (s->capacity >> 1))
+        s->str = (char*)realloc((void*)s->str, s->capacity << 1);
+
+    for (size_t k=s->len-1; k>i; k--)
+        s->str[k] = s->str[k-1];
+    s->str[i] = c;
+}

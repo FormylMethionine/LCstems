@@ -5,7 +5,7 @@
 
 int main(void) {
     printf("Hello\n");
-    string* test = str_create("Hello");
+    string* test = str_create("Ho");
     printf("len:%lu\n", test->len);
     printf("capacity:%lu\n", test->capacity);
     char* ctest = cstr(test);
@@ -25,6 +25,12 @@ int main(void) {
     free(ctest);
     printf("len:%lu\n", test->len);
     printf("capacity:%lu\n\n", test->capacity);
+
+    printf("insert char\n");
+    str_char_insert(test, 'e', 1);
+    ctest = cstr(test);
+    printf("string:%s\n", ctest);
+    free(ctest);
     str_free(test);
 
     printf("long hello\n");
@@ -32,7 +38,7 @@ int main(void) {
     printf("len:%lu\n", test->len);
     printf("capacity:%lu\n", test->capacity);
     ctest = cstr(test);
-    printf("string:%s\n", cstr);
+    printf("string:%s\n", ctest);
     free(ctest);
     str_free(test);
 
