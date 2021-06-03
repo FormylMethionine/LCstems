@@ -26,8 +26,6 @@ void str_string_insert(string*, string*, unsigned int);
 
 char str_get(string*, unsigned int);
 
-char* strcopy(const char*, char*);
-
 char* cstr(string*);
 
 #endif
