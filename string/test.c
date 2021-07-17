@@ -4,11 +4,20 @@
 #include "string.h"
 
 int main(void) {
-    printf("Hello\n");
-    string* test = str_create("Ho");
+    printf("Empty string\n");
+    string* test = str_create("");
     printf("len:%lu\n", test->len);
     printf("capacity:%lu\n", test->capacity);
     char* ctest = cstr(test);
+    printf("string:%s\n\n", ctest);
+    free(ctest);
+    str_free(test);
+
+    printf("Hello\n");
+    test = str_create("Ho");
+    printf("len:%lu\n", test->len);
+    printf("capacity:%lu\n", test->capacity);
+    ctest = cstr(test);
     printf("string:%s\n\n", ctest);
     free(ctest);
 
@@ -56,6 +65,17 @@ int main(void) {
     free(cs1);
     str_free(s1);
     str_free(s2);
+
+    // kinda bugged, I'll see later
+    printf("UTF-8????\n");
+    test = str_create("éàö¶¶¶ððÛôÛîûåðßÊøðæ±Êß");
+    str_insert(test, "ÜÜÜÏÖô¶ÊøÂð±â", 3);
+    ctest = cstr(test);
+    printf("string:%s\n", ctest);
+    printf("length:%lu\n\n", test->len);
+    printf("capacity:%lu\n\n", test->capacity);
+    free(ctest);
+    str_free(test);
 
     return 0;
 }

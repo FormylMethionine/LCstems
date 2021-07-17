@@ -1,5 +1,7 @@
 #include "string.h"
-#include <stdio.h>
+
+#define INITIAL_CAPACITY 16
+#define MAX(A, B) (A > B ? A : B)
 
 string* str_create(char* init) {
     string* ret = (string*)malloc(sizeof(string));
@@ -7,6 +9,7 @@ string* str_create(char* init) {
 
     ret->len = strlen(init);
     ret->capacity = nextPowerOfTwo(ret->len << 1);
+    ret->capacity = MAX(ret->capacity, INITIAL_CAPACITY);
 
     ret->str = (char*)malloc(ret->capacity*sizeof(char));
     strcopy(init, ret->str);

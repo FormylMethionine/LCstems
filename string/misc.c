@@ -12,4 +12,3 @@ char* strcopy(const char* from, char* to) {
         to[i] = from[i];
     return to;
 }
-
