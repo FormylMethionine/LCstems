@@ -11,14 +11,11 @@ typedef struct {
     char* value;
 } ht_item;
 
-ht_item* item_create(char*, char*);
-void item_free(ht_item*);
-
 // Hash function
 static size_t hash(const char*);
 
 typedef struct {
-    ht_item** items;
+    ht_item* items;
     size_t len; // actual number of objets contained in the table
     size_t capacity; // max number of elements in the array
 } HashTable;

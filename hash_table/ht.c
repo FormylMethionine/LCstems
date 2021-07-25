@@ -3,30 +3,6 @@
 #define INITIAL_SIZE 32
 #define MAX(A, B) (A > B ? A : B)
 
-ht_item* item_create(char* key, char* value) {
-    ht_item* ret = (ht_item*)malloc(sizeof(ht_item));
-    
-    ret->key = NULL;
-    ret->value = NULL;
-
-    if (key != NULL) {
-        ret->key = (char*)malloc((strlen(key)+1)*sizeof(char));
-        strcpy(ret->key, key);
-    }
-
-    if (key != NULL) {
-        ret->value = (char*)malloc((strlen(key)+1)*sizeof(char));
-        strcpy(ret->value, value);
-    }
-    return ret;
-}
-
-void item_free(ht_item* item) {
-    free(item->key);
-    free(item->value);
-    free(item);
-}
-
 #define FNV_OFFSET 14695981039346656037UL
 #define FNV_PRIME 1099511628211UL
 static size_t hash(const char* key) {
@@ -47,27 +23,31 @@ HashTable* ht_create(size_t size) {
     
     ret->len = 0;
 
-    ret->items = (ht_item*)malloc(ret->capacity*sizeof(ht_item*));
-    
-    for (size_t i=0; i<ret->capacity; i++)
-        ret->items[i] = item_create((char*)NULL, (char*)NULL);
+    ret->items = (ht_item*)calloc(ret->capacity, sizeof(ht_item));
+    if (ret->items == NULL) {
+        free(ret->items);
+        return NULL;
+    }
 
     return ret;
 }
 
 void ht_free(HashTable* ht) {
-    for (size_t i=0; i<ht->capacity; i++)
-        item_free(ht->items[i]);
-
+    for (size_t i = 0; i < ht->capacity; i++) {
+        if (ht->items[i].key != NULL)
+            free(ht->items[i].key);
+        if (ht->items[i].value != NULL)
+            free(ht->items[i].value);
+    }
     free(ht->items);
+    free(ht);
 }
 
 void ht_insert(HashTable* ht, char* key, char* value) {
     size_t index = hash(key) & (ht->capacity - 1);
 
-    while ((void*)ht->items[index]->key != NULL) {
-        if (strcmp(key, ht->items[index]->key) == 0) {
-            ht->items[index]->value = value;
+    while ((void*)ht->items[index].key != NULL) {
+        if (strcmp(key, ht->items[index].key) == 0) {
             break;
         }
 
@@ -77,20 +57,23 @@ void ht_insert(HashTable* ht, char* key, char* value) {
         }
     }
 
+    if (ht->items[index].key != NULL && strcmp(key, ht->items[index].key) == 1)
+        ht->len++;
+
     key = strdup(key);
     value = strdup(value);
     
-    ht->items[index]->key = key;
-    ht->items[index]->value = value;
-    ht->len++;
+    ht->items[index].key = key;
+    ht->items[index].value = value;
+    
 } 
 
 char* ht_search(HashTable* ht, char* key) {
     size_t index = hash(key) & (ht->capacity-1);
     
-    while ((void*)ht->items[index]->key == NULL) {
-        if(strcmp(key, ht->items[index]->key) == 0)
-            return ht->items[index]->value;
+    while ((void*)ht->items[index].key != NULL) {
+        if(strcmp(key, ht->items[index].key) == 0)
+            return ht->items[index].value;
         index ++;
         if (index >= ht->capacity)
             index = 0;
