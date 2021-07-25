@@ -1,8 +1,6 @@
 #ifndef HT_H
 #define HT_H
 
-#include "../string/string.h"
-#include "../string/misc.h"
 #include <stdlib.h>
 #include <string.h>
 
