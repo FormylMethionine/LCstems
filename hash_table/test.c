@@ -8,13 +8,18 @@ int main(void) {
     printf("size:%lu\n", ht->len);
     printf("capacity:%lu\n\n", ht->capacity);
     printf("insert object\n");
-    char* key = "A";
-    char* value = "AB";
-    ht_insert(ht, key, value);
+
+    ht_insert(ht, "A", "AB");
     printf("size:%lu\n", ht->len);
     printf("capacity:%lu\n\n", ht->capacity);
+    
+    ht_insert(ht, "A", "ABC");
+    printf("size:%lu\n", ht->len);
+    printf("capacity:%lu\n\n", ht->capacity);
+
+    printf("%s\n", ht_search(ht, "A"));
+
     ht_free(ht);
-    free(ht);
 
     return 0;
 }
