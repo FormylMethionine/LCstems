@@ -84,3 +84,18 @@ void ht_insert(HashTable* ht, char* key, char* value) {
     ht->items[index]->value = value;
     ht->len++;
 } 
+
+char* ht_search(HashTable* ht, char* key) {
+    size_t index = hash(key) & (ht->capacity-1);
+    
+    while ((void*)ht->items[index]->key == NULL) {
+        if(strcmp(key, ht->items[index]->key) == 0)
+            return ht->items[index]->value;
+        index ++;
+        if (index >= ht->capacity)
+            index = 0;
+    }
+
+    return NULL;
+
+}
